@@ -78,3 +78,159 @@
 !(add-atom &kb (True))
 
 
+
+;; Rule Base
+
+!(bind! &rb (new-space))
+
+;; Software Engineer
+!(add-reduct &rb
+  (-> (user-skill $user python_core)
+      (user-skill $user python_advanced)
+      (sw-python $user)))
+
+!(add-reduct &rb
+  (-> (user-skill $user javascript_basics)
+      (user-skill $user javascript)
+      (sw-js $user)))
+
+!(add-reduct &rb
+  (-> (sw-python $user)
+      (sw-js $user)
+      (sw-skills $user)))
+
+!(add-reduct &rb
+  (-> (sw-skills $user)
+      (user-interest $user software_development)
+      (qualifies-for $user software_engineer)))
+
+
+;; Data Engineer
+!(add-reduct &rb
+  (-> (user-skill $user python)
+      (user-skill $user sql_basics)
+      (de-sql-python $user)))
+
+!(add-reduct &rb
+  (-> (de-sql-python $user)
+      (user-skill $user cloud_basics)
+      (de-cloud-ready $user)))
+
+!(add-reduct &rb
+  (-> (de-cloud-ready $user)
+      (user-interest $user data_engineering)
+      (qualifies-for $user data_engineer)))
+
+
+;; DevOps Engineer
+!(add-reduct &rb
+  (-> (user-skill $user linux)
+      (user-skill $user ci_cd)
+      (devops-step1 $user)))
+
+!(add-reduct &rb
+  (-> (devops-step1 $user)
+      (user-skill $user networking)
+      (devops-step2 $user)))
+
+!(add-reduct &rb
+  (-> (devops-step2 $user)
+      (user-skill $user docker)
+      (devops-skills-2 $user)))
+
+!(add-reduct &rb
+  (-> (devops-skills-2 $user)
+      (user-interest $user infrastructure)
+      (qualifies-for $user devops_engineer)))
+
+
+;; Web Developer
+!(add-reduct &rb
+  (-> (user-skill $user html_css)
+      (user-skill $user javascript)
+      (web-core $user)))
+
+!(add-reduct &rb
+  (-> (web-core $user)
+      (user-skill $user responsive_design)
+      (web-skills $user)))
+
+!(add-reduct &rb
+  (-> (web-skills $user)
+      (user-interest $user web_development)
+      (qualifies-for $user web_developer)))
+
+
+;; Blockchain Developer
+!(add-reduct &rb
+  (-> (user-skill $user blockchain_fundamentals)
+      (user-skill $user solidity)
+      (bc-core $user)))
+
+
+!(add-reduct &rb
+  (-> (bc-core $user)
+      (user-skill $user cryptography)
+      (bc-skills $user)))
+
+!(add-reduct &rb
+  (-> (bc-skills $user)
+      (user-interest $user blockchain_technology)
+      (qualifies-for $user blockchain_developer)))
+
+
+;; Security Analyst
+!(add-reduct &rb
+  (-> (user-skill $user network_security)
+      (user-skill $user risk_assessment)
+      (sec-core $user)))
+
+!(add-reduct &rb
+  (-> (sec-core $user)
+      (user-skill $user incident_response)
+      (sec-skills $user)))
+
+!(add-reduct &rb
+  (-> (sec-skills $user)
+      (user-interest $user cybersecurity)
+      (qualifies-for $user security_analyst)))
+
+
+;; ML Engineer
+!(add-reduct &rb
+  (-> (user-skill $user machine_learning_basics)
+      (user-skill $user statistics)
+      (ml-foundation $user)))
+
+!(add-reduct &rb
+  (-> (ml-foundation $user)
+      (user-skill $user data_preprocessing)
+      (ml-data $user)))
+
+!(add-reduct &rb
+  (-> (ml-data $user)
+      (user-skill $user deep_learning)
+      (ml-skills $user)))
+
+!(add-reduct &rb
+  (-> (ml-skills $user)
+      (user-interest $user machine_learning)
+      (qualifies-for $user ml_engineer)))
+
+
+;; Computer Scientist
+!(add-reduct &rb
+  (-> (user-skill $user algorithms)
+      (user-skill $user data_structures)
+      (cs-core $user)))
+
+
+!(add-reduct &rb
+  (-> (cs-core $user)
+      (user-skill $user theory_of_computation)
+      (cs-skills $user)))
+
+!(add-reduct &rb
+  (-> (cs-skills $user)
+      (user-interest $user theoretical_computing)
+      (qualifies-for $user computer_scientist)))
