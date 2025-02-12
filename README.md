@@ -1,6 +1,5 @@
 # Carrer path Advisor
-
-This career path advisor, built using the metta programming language, shows the effective use of inferencing techniques by integrating both forward and backward chaining. It employs a well-structured knowledge base of roles, required skills, and user profiles alongside a comprehensive rule base to dynamically evaluate and recommend suitable career paths. The implementation efficiently analyzes users' skills and interests, aligning them with career requirements for roles like software engineer, web developer, devops engineer, and machine learning engineer, demonstrating a practical application of chaining techniques in intelligent decision support for career planning.
+This metta career advisor leverages both forward and backward chaining to dynamically infer career paths. It uses a structured knowledge and rule base to analyze users' skills and interests, matching them to roles.
 
 ## Forward_chaining.metta
 - This metta file demonstrates **forward chaining** reasoning. It recursively applies rules, feeding new facts back into the system until no further inferences can be made.
