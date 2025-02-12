@@ -10,10 +10,14 @@
 !(add-atom &kb (required_skill devops_engineer fundamentals))
 !(add-atom &kb (required_skill devops_engineer automation_cloud))
 
+!(add-atom &kb (role ml_engineer)) ;Machine Learning Engineer
+!(add-atom &kb (required_skill ml_engineer python))
+!(add-atom &kb (required_skill ml_engineer machine_learning))
+!(add-atom &kb (required_skill ml_engineer deep_learning))
 
 
 ;; User Data
-!(add-atom &kb (user user1))
+!(add-atom &kb (user user1)) ;User 1
 !(add-atom &kb (user_skill user1 os_networking))
 !(add-atom &kb (user_skill user1 git_programming))
 !(add-atom &kb (user_skill user1 ci_cd_containerization))
@@ -23,10 +27,23 @@
 !(add-atom &kb (user_interest user1 infrastructure))
 !(add-atom &kb (user_interest devops_engineer automation))
 
+!(add-atom &kb (user user2)) ;User 2
+!(add-atom &kb (user_skill user2 python_basics))
+!(add-atom &kb (user_skill user2 python_advanced))
+!(add-atom &kb (user_skill user2 statistics))
+!(add-atom &kb (user_skill user2 Linear_algebra))
+!(add-atom &kb (user_skill user2 machine_learning_basics))
+!(add-atom &kb (user_skill user2 machine_learning_algorithms))
+!(add-atom &kb (user_skill user2 neural-networks))
+!(add-atom &kb (user_skill user2 deep_learning_architecture))
+!(add-atom &kb (user_interest user2 machine_learning))
+
+
+
 ;Rule Base
 !(bind! &rb (new-space))
 
-; Devops
+; Devops Engineer
 ; 1. Fundamentals Qualification
 !(add-reduct &rb
     (-> (user_skill $user os_networking)
@@ -75,6 +92,71 @@
         (user_interest $user infrastructure)
         (qualifies-for $user devops_engineer)))
 
+
+; Machine Learning Engineer
+; 1. Python Qualification
+!(add-reduct &rb
+    (-> (user_skill $user python_basics)
+        (user_skill $user python_advanced)
+        (python_knowledge $user)))
+
+
+!(add-reduct &rb
+    (-> (python_knowledge $user)
+        (required_skill ml_engineer python)
+        (python_qualified $user)))
+
+; 2. Machine Learning Qualification
+!(add-reduct &rb
+    (-> (python_qualified $user)
+        (user_skill $user machine_learning_basics)
+        (python_ml $user)))
+
+!(add-reduct &rb
+    (-> (python_ml $user)
+        (user_skill $user machine_learning_algorithms)
+        (basic_ml_qualified $user)))
+
+; 3. Mathimatical knowledge on machine learning Qualification
+!(add-reduct &rb
+    (-> (basic_ml_qualified $user)
+        (user_skill $user statistics)
+        (ml_maths $user)))
+
+!(add-reduct &rb
+    (-> (ml_maths $user)
+        (user_skill $user Linear_algebra)
+        (ml_knowledge_with-maths $user)))
+
+; 4. Advanced machine learning knowledge Qualification
+!(add-reduct &rb
+    (-> (ml_knowledge_with-maths $user)
+        (user_skill $user neural-networks)
+        (advanced_ml_knowledge $user)))
+
+!(add-reduct &rb
+    (-> (advanced_ml_knowledge $user)
+        (required_skill ml_engineer machine_learning)
+        (ml_qualified $user)))
+
+; 5. Deep Learning Knowledge Qualification
+!(add-reduct &rb
+    (-> (ml_qualified $user)
+        (user_skill $user deep_learning_architecture)
+        (deep_learning_knowledge $user)))
+
+!(add-reduct &rb
+    (-> (deep_learning_knowledge $user)
+        (required_skill ml_engineer deep_learning)
+        (ml_dl_qualified $user)))
+
+; 6. Final ML Engineer Qualification
+!(add-reduct &rb
+    (-> (ml_dl_qualified $user)
+        (user_interest $user machine_learning)
+        (qualifies-for $user ml_engineer)))
+
+
 ;Forward chainer
 (: fromNumber (-> Number Atom))
 (= (fromNumber $n) (if (<= $n 0) Z (S (fromNumber (- $n 1)))))
@@ -91,4 +173,9 @@
           (match &kb $premise1 (fc $conclusion $k))))
 
 ; Test Cases
+
+;Devops Engineer
 !(fc (user_skill user1 os_networking) (fromNumber 9))
+
+;Machine Learning Engineer
+!(fc(user_skill user2 python_basics) (fromNumber 11))
