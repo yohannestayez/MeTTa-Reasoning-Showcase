@@ -6,18 +6,18 @@
 !(bind! &kb (new-space))
 
 ;fundamental facts
-
-!(add-atom &kb (role software_engineer)) ; Software engineer
+; Software engineer
+!(add-atom &kb (role software_engineer))
 !(add-atom &kb (required_skill software_engineer python))
 !(add-atom &kb (required_skill software_engineer javascript))
 
-!(add-atom &kb (role web_developer)) ; Web Developer
+; Web Developer
+!(add-atom &kb (role web_developer))
 !(add-atom &kb (required-skill web_developer responsive_design))
 !(add-atom &kb (required-skill web_developer backend_development))
 
 
 ;User knowledge Data
-
 !(add-atom &kb (user user1)) ;user 1
 !(add-atom &kb (user_skill user1 python_basics))
 !(add-atom &kb (user_skill user1 python_advanced))
@@ -124,7 +124,6 @@
 
 
 ; Backward Chainer
-;
 (: fromNumber (-> Number Atom))
 (= (fromNumber $n) (if (<= $n 0) Z (S (fromNumber (- $n 1)))))
 
@@ -143,6 +142,17 @@
 
 
 ; Test Cases
+
+;; What does user 1 qualify for?
 !(bc_bem (qualifies-for user1 $s) (fromNumber 5))
+
+; chaining path: qualifies-for(senior) <- qualifies(software) <- has_skills <- (meets_python + meets_js) <- (py_qualified + js_qualified) <- user_skills
+
+;Expected output: [(qualifies-for user1 senior_software_engineer)]
+
+;; What does user 2 qualify for?
 !(bc_bem (qualifies-for user2 $s) (fromNumber 5))
 
+;chaining path: qualifies-for(web_dev) <- skills_met <- (frontend_qualified + backend_qualified) <- (frontend_knowledge + basic_backend) <- (html/css/js + db/backend)
+
+;expected output: [(qualifies-for user2 web_developer)]

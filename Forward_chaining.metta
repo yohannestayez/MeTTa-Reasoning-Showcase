@@ -6,11 +6,13 @@
 !(bind! &kb (new-space))
 
 ;; Roles and Requirements
-!(add-atom &kb (role devops_engineer)) ;Devops Engineer
+;Devops Engineer
+!(add-atom &kb (role devops_engineer))
 !(add-atom &kb (required_skill devops_engineer fundamentals))
 !(add-atom &kb (required_skill devops_engineer automation_cloud))
 
-!(add-atom &kb (role ml_engineer)) ;Machine Learning Engineer
+;Machine Learning Engineer
+!(add-atom &kb (role ml_engineer))
 !(add-atom &kb (required_skill ml_engineer python))
 !(add-atom &kb (required_skill ml_engineer machine_learning))
 !(add-atom &kb (required_skill ml_engineer deep_learning))
@@ -174,8 +176,15 @@
 
 ; Test Cases
 
-;Devops Engineer
+; What carrer path advise for user 1 based on his skills and interest?
 !(fc (user_skill user1 os_networking) (fromNumber 9))
+; expected output: [(user_skill user1 os_networking), (fundamentals_knowledge user1), (ci_cd_knowledge user1), (automation_knowledge user1), (required_skills_met user1), (qualifies-for user1 devops_engineer), (automation_cloud_qualified user1), (basic_automation_qualified user1), (fundamentals_qualified user1), (basic_fundamentals_qualified user1)]
 
-;Machine Learning Engineer
+; final advise: (qualifies-for user1 devops_engineer)
+
+; What carrer path advise for user 2 based on his skills and interest?
 !(fc(user_skill user2 python_basics) (fromNumber 11))
+
+; expected output: [(user_skill user2 python_basics), (python_qualified user2), (basic_ml_qualified user2), (ml_knowledge_with-maths user2), (ml_qualified user2), (ml_dl_qualified user2), (qualifies-for user2 ml_engineer), (deep_learning_knowledge user2), (advanced_ml_knowledge user2), (ml_maths user2), (python_ml user2), (python_knowledge user2)]
+
+; final advise: (qualifies-for user2 ml_engineer)
